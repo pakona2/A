@@ -2,7 +2,7 @@ import os
 import tempfile
 import unittest
 
-from app import create_app
+from backend.app import create_app
 
 
 class CallMeApiTest(unittest.TestCase):
@@ -24,6 +24,12 @@ class CallMeApiTest(unittest.TestCase):
         self.assertEqual(response.status_code, 201)
         self.assertEqual(response.json['call']['phone_number'], '+15551234567')
         self.assertEqual(self.client.post('/api/calls', json={}).status_code, 400)
+
+    def test_trigger_requires_e164_and_provider_configuration(self):
+        invalid = self.client.post('/api/calls/trigger', json={'phone_number': '5551234567'})
+        self.assertEqual(invalid.status_code, 400)
+        unconfigured = self.client.post('/api/calls/trigger', json={'phone_number': '+15551234567'})
+        self.assertEqual(unconfigured.status_code, 503)
 
 
 if __name__ == '__main__':

@@ -9,10 +9,11 @@
     "preview": "vite preview",
     "mobile:sync": "npm run build && npx cap sync android",
     "mobile:open": "npx cap open android",
-    "mobile:build": "npm run mobile:sync && cd android && ./gradlew assembleDebug",
-    "mobile:release": "npm run mobile:sync && cd android && ./gradlew assembleRelease"
+    "mobile:build": "bash scripts/mobile-build.sh debug",
+    "mobile:release": "bash scripts/mobile-build.sh release"
   },
   "dependencies": {
+    "@capacitor-community/contacts": "^8.0.0",
     "@capacitor/android": "latest",
     "@capacitor/cli": "latest",
     "@capacitor/core": "latest",
@@ -22,6 +23,5 @@
     "react": "latest",
     "react-dom": "latest",
     "vite": "latest"
-  },
-  "devDependencies": {}
+  }
 }
